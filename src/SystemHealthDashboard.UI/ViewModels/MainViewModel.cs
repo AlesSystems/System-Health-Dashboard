@@ -7,7 +7,10 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using SystemHealthDashboard.Core.Services;
 using SystemHealthDashboard.Core.Models;
+using SystemHealthDashboard.Metrics.Models;
 using SystemHealthDashboard.UI.Services;
+using SystemHealthDashboard.UI.Helpers;
+using SystemHealthDashboard.UI.Models;
 
 namespace SystemHealthDashboard.UI.ViewModels;
 
@@ -15,6 +18,8 @@ public class MainViewModel : ViewModelBase, IDisposable
 {
     private readonly ApplicationCore _appCore;
     private readonly NotificationService _notificationService;
+    private readonly UIUpdateThrottler _uiThrottler;
+    private readonly MetricUpdateBatch _pendingUpdates;
     private readonly int _maxDataPoints = 60;
 
     private readonly ObservableCollection<ObservableValue> _cpuValues;
@@ -40,6 +45,8 @@ public class MainViewModel : ViewModelBase, IDisposable
     {
         _appCore = new ApplicationCore(updateIntervalMs: 1000, historySize: 60);
         _notificationService = new NotificationService(_appCore.Alerts.Configuration);
+        _uiThrottler = new UIUpdateThrottler(intervalMs: 100);
+        _pendingUpdates = new MetricUpdateBatch();
 
         _cpuValues = new ObservableCollection<ObservableValue>();
         _memoryValues = new ObservableCollection<ObservableValue>();
@@ -124,43 +131,111 @@ public class MainViewModel : ViewModelBase, IDisposable
     {
         _appCore.EventBus.CpuMetricReceived += (s, e) =>
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            lock (_pendingUpdates)
             {
-                CurrentCpu = e.Metric.TotalUsagePercent;
-                AddDataPoint(_cpuValues, e.Metric.TotalUsagePercent);
+                _pendingUpdates.CpuMetric = e.Metric;
+                _pendingUpdates.HasCpuUpdate = true;
+            }
+            
+            _uiThrottler.ScheduleUpdate("cpu", () =>
+            {
+                CpuMetricData? metric;
+                lock (_pendingUpdates)
+                {
+                    if (!_pendingUpdates.HasCpuUpdate) return;
+                    metric = _pendingUpdates.CpuMetric;
+                    _pendingUpdates.HasCpuUpdate = false;
+                }
+                
+                if (metric != null)
+                {
+                    CurrentCpu = metric.TotalUsagePercent;
+                    AddDataPoint(_cpuValues, metric.TotalUsagePercent);
+                }
             });
         };
 
         _appCore.EventBus.MemoryMetricReceived += (s, e) =>
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            lock (_pendingUpdates)
             {
-                CurrentMemory = e.Metric.UsagePercent;
-                CurrentMemoryUsedMB = e.Metric.UsedBytes / 1024 / 1024;
-                CurrentMemoryTotalMB = e.Metric.TotalBytes / 1024 / 1024;
-                AddDataPoint(_memoryValues, e.Metric.UsagePercent);
+                _pendingUpdates.MemoryMetric = e.Metric;
+                _pendingUpdates.HasMemoryUpdate = true;
+            }
+            
+            _uiThrottler.ScheduleUpdate("memory", () =>
+            {
+                MemoryMetricData? metric;
+                lock (_pendingUpdates)
+                {
+                    if (!_pendingUpdates.HasMemoryUpdate) return;
+                    metric = _pendingUpdates.MemoryMetric;
+                    _pendingUpdates.HasMemoryUpdate = false;
+                }
+                
+                if (metric != null)
+                {
+                    CurrentMemory = metric.UsagePercent;
+                    CurrentMemoryUsedMB = metric.UsedBytes / 1024 / 1024;
+                    CurrentMemoryTotalMB = metric.TotalBytes / 1024 / 1024;
+                    AddDataPoint(_memoryValues, metric.UsagePercent);
+                }
             });
         };
 
         _appCore.EventBus.DiskMetricReceived += (s, e) =>
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            lock (_pendingUpdates)
             {
-                CurrentDiskRead = e.Metric.ReadBytesPerSecond / 1024.0;
-                CurrentDiskWrite = e.Metric.WriteBytesPerSecond / 1024.0;
-                AddDataPoint(_diskReadValues, CurrentDiskRead);
-                AddDataPoint(_diskWriteValues, CurrentDiskWrite);
+                _pendingUpdates.DiskMetric = e.Metric;
+                _pendingUpdates.HasDiskUpdate = true;
+            }
+            
+            _uiThrottler.ScheduleUpdate("disk", () =>
+            {
+                DiskMetricData? metric;
+                lock (_pendingUpdates)
+                {
+                    if (!_pendingUpdates.HasDiskUpdate) return;
+                    metric = _pendingUpdates.DiskMetric;
+                    _pendingUpdates.HasDiskUpdate = false;
+                }
+                
+                if (metric != null)
+                {
+                    CurrentDiskRead = metric.ReadBytesPerSecond / 1024.0;
+                    CurrentDiskWrite = metric.WriteBytesPerSecond / 1024.0;
+                    AddDataPoint(_diskReadValues, CurrentDiskRead);
+                    AddDataPoint(_diskWriteValues, CurrentDiskWrite);
+                }
             });
         };
 
         _appCore.EventBus.NetworkMetricReceived += (s, e) =>
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            lock (_pendingUpdates)
             {
-                CurrentNetworkDownload = e.Metric.DownloadBytesPerSecond / 1024.0;
-                CurrentNetworkUpload = e.Metric.UploadBytesPerSecond / 1024.0;
-                AddDataPoint(_networkDownloadValues, CurrentNetworkDownload);
-                AddDataPoint(_networkUploadValues, CurrentNetworkUpload);
+                _pendingUpdates.NetworkMetric = e.Metric;
+                _pendingUpdates.HasNetworkUpdate = true;
+            }
+            
+            _uiThrottler.ScheduleUpdate("network", () =>
+            {
+                NetworkMetricData? metric;
+                lock (_pendingUpdates)
+                {
+                    if (!_pendingUpdates.HasNetworkUpdate) return;
+                    metric = _pendingUpdates.NetworkMetric;
+                    _pendingUpdates.HasNetworkUpdate = false;
+                }
+                
+                if (metric != null)
+                {
+                    CurrentNetworkDownload = metric.DownloadBytesPerSecond / 1024.0;
+                    CurrentNetworkUpload = metric.UploadBytesPerSecond / 1024.0;
+                    AddDataPoint(_networkDownloadValues, CurrentNetworkDownload);
+                    AddDataPoint(_networkUploadValues, CurrentNetworkUpload);
+                }
             });
         };
 
@@ -171,7 +246,7 @@ public class MainViewModel : ViewModelBase, IDisposable
 
         _appCore.Alerts.SeverityChanged += (s, severity) =>
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            _uiThrottler.ScheduleUpdate("severity", () =>
             {
                 CurrentAlertSeverity = severity;
                 AlertSeverityChanged?.Invoke(this, severity);
@@ -249,6 +324,7 @@ public class MainViewModel : ViewModelBase, IDisposable
 
     public void Dispose()
     {
+        _uiThrottler?.Dispose();
         _appCore?.Dispose();
     }
 }

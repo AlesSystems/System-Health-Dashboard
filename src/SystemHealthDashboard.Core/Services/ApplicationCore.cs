@@ -8,14 +8,14 @@ namespace SystemHealthDashboard.Core.Services;
 public class ApplicationCore : IDisposable
 {
     private readonly MetricManager _metricManager;
-    private readonly MetricCache _metricCache;
+    private readonly OptimizedMetricCache _metricCache;
     private readonly EventBus _eventBus;
     private readonly AlertService _alertService;
     private readonly int _updateIntervalMs;
     private readonly int _historySize;
 
     public EventBus EventBus => _eventBus;
-    public MetricCache Cache => _metricCache;
+    public OptimizedMetricCache Cache => _metricCache;
     public AlertService Alerts => _alertService;
     public bool IsRunning => _metricManager.IsRunning;
 
@@ -25,7 +25,7 @@ public class ApplicationCore : IDisposable
         _historySize = historySize;
 
         _metricManager = new MetricManager(updateIntervalMs, historySize);
-        _metricCache = new MetricCache(historySize);
+        _metricCache = new OptimizedMetricCache(historySize);
         _eventBus = new EventBus();
         _alertService = new AlertService();
 

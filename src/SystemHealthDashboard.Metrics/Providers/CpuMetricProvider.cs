@@ -9,6 +9,12 @@ public class CpuMetricProvider : IMetricProvider<CpuMetricData>
     private PerformanceCounter _totalCpuCounter;
     private List<PerformanceCounter> _perCoreCounters;
     private int _processorCount;
+    private readonly List<double> _perCoreUsageCache;
+
+    public CpuMetricProvider()
+    {
+        _perCoreUsageCache = new List<double>();
+    }
 
     public void Initialize()
     {
@@ -16,7 +22,7 @@ public class CpuMetricProvider : IMetricProvider<CpuMetricData>
         
         _totalCpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         
-        _perCoreCounters = new List<PerformanceCounter>();
+        _perCoreCounters = new List<PerformanceCounter>(_processorCount);
         for (int i = 0; i < _processorCount; i++)
         {
             _perCoreCounters.Add(new PerformanceCounter("Processor", "% Processor Time", i.ToString()));
@@ -38,13 +44,13 @@ public class CpuMetricProvider : IMetricProvider<CpuMetricData>
 
         double totalUsage = _totalCpuCounter.NextValue();
         
-        List<double> perCoreUsage = new List<double>();
+        _perCoreUsageCache.Clear();
         foreach (var counter in _perCoreCounters)
         {
-            perCoreUsage.Add(counter.NextValue());
+            _perCoreUsageCache.Add(counter.NextValue());
         }
 
-        return new CpuMetricData(totalUsage, perCoreUsage);
+        return new CpuMetricData(totalUsage, new List<double>(_perCoreUsageCache));
     }
 
     public void Dispose()

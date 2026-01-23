@@ -1,7 +1,22 @@
 ﻿using SystemHealthDashboard.Core.Services;
 using SystemHealthDashboard.Core.Models;
+using SystemHealthDashboard.Demo;
 
-Console.WriteLine("=== System Health Dashboard - Phase 7 Demo ===");
+Console.WriteLine("=== System Health Dashboard - Demo ===\n");
+Console.WriteLine("Select mode:");
+Console.WriteLine("1. Phase 7 - Alerts Demo");
+Console.WriteLine("2. Phase 8 - Performance Benchmark");
+Console.Write("\nEnter choice (1 or 2): ");
+
+var choice = Console.ReadLine();
+
+if (choice == "2")
+{
+    await PerformanceBenchmark.RunAsync();
+    return;
+}
+
+Console.WriteLine("\n=== Phase 7 - Alerts & Notifications Demo ===");
 Console.WriteLine("Application Core with Alerts Test\n");
 
 using var app = new ApplicationCore(updateIntervalMs: 1000, historySize: 60);
