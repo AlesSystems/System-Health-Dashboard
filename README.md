@@ -2,285 +2,367 @@
 
 A real-time desktop application for comprehensive system monitoring and performance tracking.
 
-## 🎯 Project Goals
+🖥️ System Health Dashboard — Full Development Phases
+🎯 Project Goal
 
-Build a powerful, cross-platform desktop application that provides:
+Build a real-time desktop application that monitors:
 
-- **CPU Usage Monitoring** - Real-time CPU utilization, per-core metrics, and process tracking
-- **Memory Usage Tracking** - RAM usage, swap memory, and memory-intensive process identification
-- **Disk Activity Monitoring** - Read/write speeds, disk usage, and I/O operations
-- **Network Activity** - Upload/download speeds, network interfaces, and bandwidth usage
-- **System Alerts** - Configurable thresholds and notifications for critical metrics
-- **Historical Trends** - Time-series data visualization and performance analytics
+CPU usage
 
-## 🛠️ Tech Stack
+Memory usage
 
-### Frontend Framework
-- **Electron** - Cross-platform desktop application framework
-- **React** - UI component library for building interactive interfaces
-- **TypeScript** - Type-safe development
+Disk activity
 
-### Visualization
-- **Chart.js** or **Recharts** - For real-time graphs and historical data visualization
-- **D3.js** (optional) - For advanced custom visualizations
+Network activity
 
-### System Monitoring
-- **systeminformation** - Cross-platform system and hardware information library
-- **node-os-utils** - CPU, memory, and disk utilities
-- **speedtest-net** (optional) - Network speed testing
+System alerts
 
-### State Management
-- **Redux Toolkit** or **Zustand** - For managing application state
-- **React Query** - For data fetching and caching
+Historical trends
 
-### Styling
-- **Tailwind CSS** or **Material-UI** - For modern, responsive design
-- **CSS Modules** or **Styled Components** - Component-level styling
+End result:
 
-### Build Tools
-- **Vite** or **Webpack** - Module bundler and development server
-- **Electron Builder** - Package and distribute the application
+“This looks like a professional system monitoring tool.”
 
-### Testing
-- **Jest** - Unit testing framework
-- **React Testing Library** - Component testing
-- **Playwright** - E2E testing for Electron apps
+PHASE 0 — Scope & Vision (Very Important)
 
-## 📁 Proposed File Structure
+Don’t skip this.
 
-```
-System-Health-Dashboard/
-├── .github/                    # GitHub workflows and templates
-│   └── workflows/
-│       ├── build.yml          # Build and test automation
-│       └── release.yml        # Release automation
-├── public/                    # Static assets
-│   ├── icons/                # Application icons
-│   └── index.html            # Main HTML file
-├── src/
-│   ├── main/                 # Electron main process
-│   │   ├── main.ts           # Main entry point
-│   │   ├── preload.ts        # Preload script
-│   │   └── ipc/              # IPC handlers
-│   │       ├── cpu.ts
-│   │       ├── memory.ts
-│   │       ├── disk.ts
-│   │       └── network.ts
-│   ├── renderer/             # React renderer process
-│   │   ├── App.tsx           # Main React component
-│   │   ├── index.tsx         # Renderer entry point
-│   │   ├── components/       # React components
-│   │   │   ├── Dashboard/
-│   │   │   │   └── Dashboard.tsx
-│   │   │   ├── CPUMonitor/
-│   │   │   │   └── CPUMonitor.tsx
-│   │   │   ├── MemoryMonitor/
-│   │   │   │   └── MemoryMonitor.tsx
-│   │   │   ├── DiskMonitor/
-│   │   │   │   └── DiskMonitor.tsx
-│   │   │   ├── NetworkMonitor/
-│   │   │   │   └── NetworkMonitor.tsx
-│   │   │   ├── AlertsPanel/
-│   │   │   │   └── AlertsPanel.tsx
-│   │   │   └── HistoricalCharts/
-│   │   │       └── HistoricalCharts.tsx
-│   │   ├── hooks/            # Custom React hooks
-│   │   │   ├── useSystemInfo.ts
-│   │   │   └── useAlerts.ts
-│   │   ├── store/            # State management
-│   │   │   ├── index.ts
-│   │   │   └── slices/
-│   │   │       ├── systemSlice.ts
-│   │   │       └── alertsSlice.ts
-│   │   ├── utils/            # Utility functions
-│   │   │   ├── formatters.ts
-│   │   │   └── calculations.ts
-│   │   └── styles/           # Global styles
-│   │       └── global.css
-│   └── shared/               # Shared types and constants
-│       ├── types.ts
-│       └── constants.ts
-├── tests/                    # Test files
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-├── docs/                     # Documentation
-│   ├── API.md
-│   ├── ARCHITECTURE.md
-│   └── CONTRIBUTING.md
-├── dist/                     # Built application (gitignored)
-├── node_modules/             # Dependencies (gitignored)
-├── .env.example              # Environment variables template
-├── .eslintrc.json           # ESLint configuration
-├── .gitignore               # Git ignore rules
-├── .prettierrc              # Prettier configuration
-├── electron-builder.json    # Electron builder configuration
-├── package.json             # Project dependencies and scripts
-├── tsconfig.json            # TypeScript configuration
-├── vite.config.ts           # Vite configuration
-├── LICENSE                  # MIT License
-└── README.md               # This file
-```
+Core Principles
 
-## 🚀 Getting Started
+Real-time but efficient
 
-### Prerequisites
+Clean, modern UI
 
-- **Node.js** (v18 or higher)
-- **npm** or **yarn** package manager
-- **Git**
+Accurate metrics
 
-### Installation
+Extendable architecture
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AlesSystems/System-Health-Dashboard.git
-   cd System-Health-Dashboard
-   ```
+Target Platforms
 
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+Pick one first:
 
-3. Set up environment variables:
-   ```bash
-   cp .env.example .env
-   ```
+Windows (recommended)
 
-### Development
+Linux
 
-1. Start the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+macOS
 
-2. The application will launch in development mode with hot reload enabled.
+Non-Goals (for v1)
 
-### Building
+No kernel drivers
 
-Build the application for production:
+No cloud sync
 
-```bash
-# Build for current platform
-npm run build
+No admin-only features
 
-# Build for specific platforms
-npm run build:win    # Windows
-npm run build:mac    # macOS
-npm run build:linux  # Linux
-```
+PHASE 1 — Requirements & Feature Definition
+🔹 Core Features (MVP)
 
-### Testing
+Live CPU usage (%)
 
-```bash
-# Run unit tests
-npm run test
+RAM usage (used / total)
 
-# Run tests in watch mode
-npm run test:watch
+Disk read/write rate
 
-# Run E2E tests
-npm run test:e2e
+Network upload/download
 
-# Generate coverage report
-npm run test:coverage
-```
+Update every 1 second
 
-## 📊 Features
+🔹 UI Features
 
-### Real-time Monitoring
-- Live updates of system metrics (1-second intervals)
-- Visual indicators for resource utilization
-- Color-coded alerts for threshold breaches
+Dashboard with cards
 
-### Historical Analytics
-- Time-series charts for all metrics
-- Customizable time ranges (1h, 6h, 24h, 7d, 30d)
-- Export data to CSV/JSON
+Live charts
 
-### Alerts & Notifications
-- Configurable threshold alerts
-- Desktop notifications
-- Alert history and logging
+Tray icon
 
-### System Information
-- Detailed hardware specifications
-- OS information and version
-- Running processes overview
+Dark mode
 
-### Customization
-- Light/Dark theme support
-- Customizable refresh intervals
-- Widget layout customization
+🔹 Functional Requirements
 
-## 🎨 UI/UX Design Principles
+Runs without admin privileges
 
-- **Clean and Minimal** - Focus on data, not clutter
-- **Responsive** - Adapts to different window sizes
-- **Accessible** - Keyboard navigation and screen reader support
-- **Performance** - Optimized rendering for real-time updates
+Uses <5% CPU
 
-## 🔧 Configuration
+Can run in background
 
-The application can be configured through:
+PHASE 2 — Architecture Design
+🧩 High-Level Architecture
++---------------------+
+|       UI Layer      |
+|  Charts, Controls   |
++----------▲----------+
+           |
++----------|----------+
+|   Application Core  |
+|  State, Scheduler   |
++----------▲----------+
+           |
++----------|----------+
+|   Metrics Providers |
+|  CPU / RAM / Disk   |
++---------------------+
 
-- **Settings UI** - User preferences and thresholds
-- **Config File** - `~/.system-health-dashboard/config.json`
-- **Environment Variables** - For advanced configuration
+🧠 Key Design Patterns
 
-## 🤝 Contributing
+Observer / Pub-Sub (metrics → UI)
 
-We welcome contributions! Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines.
+Strategy (OS-specific collectors)
 
-### Development Workflow
+Dependency Injection
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Thread-safe data buffers
 
-### Code Standards
+PHASE 3 — Technology Stack (Example)
+Option A (Low-level, impressive)
 
-- Follow the existing code style
-- Write meaningful commit messages
-- Add tests for new features
-- Update documentation as needed
+C++
 
-## 📝 License
+Qt (UI + charts)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Native OS APIs
 
-## 🙏 Acknowledgments
+Option B (Fast & clean)
 
-- **Electron** - For the cross-platform desktop framework
-- **systeminformation** - For comprehensive system metrics
-- **React** - For the powerful UI framework
-- Community contributors and supporters
+C# (.NET)
 
-## 📮 Support
+WPF or WinUI
 
-- **Issues** - Report bugs or request features via [GitHub Issues](https://github.com/AlesSystems/System-Health-Dashboard/issues)
-- **Discussions** - Join conversations in [GitHub Discussions](https://github.com/AlesSystems/System-Health-Dashboard/discussions)
+Performance Counters
 
-## 🗺️ Roadmap
+Option C (Cross-platform)
 
-- [x] Project initialization and documentation
-- [ ] Core monitoring engine
-- [ ] Basic UI implementation
-- [ ] Real-time data visualization
-- [ ] Alert system
-- [ ] Historical data storage
-- [ ] Multi-platform builds
-- [ ] Auto-update functionality
-- [ ] Plugin system for extensibility
-- [ ] Cloud sync capabilities (optional)
+Rust
 
----
+Tauri
 
-Built with ❤️ by AlesSystems
+Native system libraries
+
+💡 If you want maximum “systems” credibility: C++ + Qt.
+
+PHASE 4 — Metric Collection Layer
+🔹 CPU Metrics
+
+Total usage %
+
+Per-core usage
+
+Implementation:
+
+Windows: GetSystemTimes
+
+Linux: /proc/stat
+
+macOS: host_processor_info
+
+🔹 Memory Metrics
+
+Total RAM
+
+Used RAM
+
+Cache
+
+Implementation:
+
+Windows: GlobalMemoryStatusEx
+
+Linux: /proc/meminfo
+
+🔹 Disk Metrics
+
+Read/write bytes per second
+
+Disk usage %
+
+Implementation:
+
+Windows: Performance Counters
+
+Linux: /proc/diskstats
+
+🔹 Network Metrics
+
+Upload/download speed
+
+Per-interface stats
+
+Implementation:
+
+Windows: GetIfTable2
+
+Linux: /proc/net/dev
+
+🔹 Metric Scheduler
+
+Background thread
+
+Fixed sampling interval
+
+Ring buffer for history
+
+PHASE 5 — Application Core
+Responsibilities
+
+Start/stop metric collectors
+
+Store metrics history
+
+Handle update frequency
+
+Emit events to UI
+
+Internal Components
+
+MetricManager
+
+SamplingScheduler
+
+MetricCache
+
+EventBus
+
+PHASE 6 — UI/UX Design
+Dashboard Layout
++------------------------------+
+|  CPU | RAM | Disk | Network  |
++------------------------------+
+|      Live Line Chart         |
++------------------------------+
+| Alerts | System Info         |
++------------------------------+
+
+UI Elements
+
+Line charts (last 60 seconds)
+
+Progress bars
+
+Icons (⚙️🔥📊)
+
+Tooltips
+
+UX Rules
+
+No clutter
+
+Consistent colors
+
+Smooth animations (but subtle)
+
+PHASE 7 — Alerts & Notifications
+Alert Types
+
+CPU > 85% for X seconds
+
+RAM usage > threshold
+
+Disk almost full
+
+Features
+
+Configurable thresholds
+
+Desktop notifications
+
+Tray icon color changes
+
+PHASE 8 — Performance Optimization
+Key Goals
+
+Minimal CPU usage
+
+No UI freezing
+
+Efficient sampling
+
+Techniques
+
+Lock-free queues
+
+Double buffering
+
+Avoid UI redraws unless changed
+
+PHASE 9 — Persistence & Settings
+Stored Settings
+
+Refresh rate
+
+Thresholds
+
+Theme
+
+Startup behavior
+
+Storage
+
+JSON / INI file
+
+Stored in user directory
+
+PHASE 10 — Testing Strategy
+Manual Tests
+
+Stress CPU/RAM
+
+Unplug network
+
+Fill disk
+
+Automated Tests
+
+Metric parsing tests
+
+Scheduler timing tests
+
+Edge Cases
+
+Sleep / resume
+
+Laptop battery mode
+
+VM environments
+
+PHASE 11 — Polishing (This Is Where It Shines ✨)
+Professional Touches
+
+Splash screen
+
+About page
+
+Version info
+
+Export system snapshot
+
+Packaging
+
+Installer
+
+App icon
+
+Code signing (optional)
+
+PHASE 12 — Future Extensions (v2 Ideas)
+
+Per-process stats
+
+Historical graphs (hours/days)
+
+Plugin system
+
+Remote monitoring
+
+CSV export
+
+🏁 Final Outcome
+
+You’ll end up with:
+
+A real desktop system tool
+
+Clear architecture
+
+OS-level knowledge
+
+CV & GitHub-ready project
