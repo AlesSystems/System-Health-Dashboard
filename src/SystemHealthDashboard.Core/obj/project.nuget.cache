@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "n2beKqt+doY=",
+  "dgSpecHash": "Cxjv+nHywTI=",
   "success": true,
   "projectFilePath": "C:\\Users\\esmer\\Desktop\\AlesSystems\\System-Health-Dashboard\\src\\SystemHealthDashboard.Core\\SystemHealthDashboard.Core.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\esmer\\.nuget\\packages\\system.configuration.configurationmanager\\10.0.2\\system.configuration.configurationmanager.10.0.2.nupkg.sha512",
+    "C:\\Users\\esmer\\.nuget\\packages\\system.diagnostics.eventlog\\10.0.2\\system.diagnostics.eventlog.10.0.2.nupkg.sha512",
+    "C:\\Users\\esmer\\.nuget\\packages\\system.diagnostics.performancecounter\\10.0.2\\system.diagnostics.performancecounter.10.0.2.nupkg.sha512",
+    "C:\\Users\\esmer\\.nuget\\packages\\system.security.cryptography.protecteddata\\10.0.2\\system.security.cryptography.protecteddata.10.0.2.nupkg.sha512",
+    "C:\\Users\\esmer\\.nuget\\packages\\system.threading.accesscontrol\\10.0.2\\system.threading.accesscontrol.10.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

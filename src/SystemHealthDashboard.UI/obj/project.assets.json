@@ -1,11 +1,333 @@
 {
   "version": 3,
   "targets": {
-    "net8.0-windows7.0": {}
+    "net8.0-windows7.0": {
+      "System.Configuration.ConfigurationManager/10.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.Diagnostics.EventLog": "10.0.2",
+          "System.Security.Cryptography.ProtectedData": "10.0.2"
+        },
+        "compile": {
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        }
+      },
+      "System.Diagnostics.EventLog/10.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          },
+          "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Diagnostics.PerformanceCounter/10.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "10.0.2",
+          "System.Threading.AccessControl": "10.0.2"
+        },
+        "compile": {
+          "lib/net8.0/System.Diagnostics.PerformanceCounter.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Diagnostics.PerformanceCounter.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Diagnostics.PerformanceCounter.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Security.Cryptography.ProtectedData/10.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        }
+      },
+      "System.Threading.AccessControl/10.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Threading.AccessControl.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Threading.AccessControl.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Threading.AccessControl.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "SystemHealthDashboard.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "SystemHealthDashboard.Metrics": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SystemHealthDashboard.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SystemHealthDashboard.Core.dll": {}
+        }
+      },
+      "SystemHealthDashboard.Metrics/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "System.Diagnostics.PerformanceCounter": "10.0.2"
+        },
+        "compile": {
+          "bin/placeholder/SystemHealthDashboard.Metrics.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SystemHealthDashboard.Metrics.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "System.Configuration.ConfigurationManager/10.0.2": {
+      "sha512": "UpBPpVzF+xbB3GsBrraPvlYCwUiOhs+RLxnTMKLqDs2gNNaAtxQRlKjXfMV3zxE+hiQkGId5olZ+9tE6xXHdwQ==",
+      "type": "package",
+      "path": "system.configuration.configurationmanager/10.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Configuration.ConfigurationManager.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Configuration.ConfigurationManager.targets",
+        "lib/net10.0/System.Configuration.ConfigurationManager.dll",
+        "lib/net10.0/System.Configuration.ConfigurationManager.xml",
+        "lib/net462/System.Configuration.ConfigurationManager.dll",
+        "lib/net462/System.Configuration.ConfigurationManager.xml",
+        "lib/net8.0/System.Configuration.ConfigurationManager.dll",
+        "lib/net8.0/System.Configuration.ConfigurationManager.xml",
+        "lib/net9.0/System.Configuration.ConfigurationManager.dll",
+        "lib/net9.0/System.Configuration.ConfigurationManager.xml",
+        "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll",
+        "lib/netstandard2.0/System.Configuration.ConfigurationManager.xml",
+        "system.configuration.configurationmanager.10.0.2.nupkg.sha512",
+        "system.configuration.configurationmanager.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Diagnostics.EventLog/10.0.2": {
+      "sha512": "TJPpTLF5MFPobq09c9BQ5X8QuviQfsKvH0Jbm7MkGylGvfIdRqJQLZDPC5sMRFkk9aZhmgir1NJKekip2NxfaA==",
+      "type": "package",
+      "path": "system.diagnostics.eventlog/10.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Diagnostics.EventLog.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Diagnostics.EventLog.targets",
+        "lib/net10.0/System.Diagnostics.EventLog.dll",
+        "lib/net10.0/System.Diagnostics.EventLog.xml",
+        "lib/net462/System.Diagnostics.EventLog.dll",
+        "lib/net462/System.Diagnostics.EventLog.xml",
+        "lib/net8.0/System.Diagnostics.EventLog.dll",
+        "lib/net8.0/System.Diagnostics.EventLog.xml",
+        "lib/net9.0/System.Diagnostics.EventLog.dll",
+        "lib/net9.0/System.Diagnostics.EventLog.xml",
+        "lib/netstandard2.0/System.Diagnostics.EventLog.dll",
+        "lib/netstandard2.0/System.Diagnostics.EventLog.xml",
+        "runtimes/win/lib/net10.0/System.Diagnostics.EventLog.Messages.dll",
+        "runtimes/win/lib/net10.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net10.0/System.Diagnostics.EventLog.xml",
+        "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll",
+        "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.xml",
+        "runtimes/win/lib/net9.0/System.Diagnostics.EventLog.Messages.dll",
+        "runtimes/win/lib/net9.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net9.0/System.Diagnostics.EventLog.xml",
+        "system.diagnostics.eventlog.10.0.2.nupkg.sha512",
+        "system.diagnostics.eventlog.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Diagnostics.PerformanceCounter/10.0.2": {
+      "sha512": "aUW7WlSpuagd0rea9LSgMJ9c73aZ2FlzS3Mk4Aqfjz43sWBu0xcVfaBNoV0KOEWhrpk6tv1PV3xqSq82vsDfRA==",
+      "type": "package",
+      "path": "system.diagnostics.performancecounter/10.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Diagnostics.PerformanceCounter.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Diagnostics.PerformanceCounter.targets",
+        "lib/net10.0/System.Diagnostics.PerformanceCounter.dll",
+        "lib/net10.0/System.Diagnostics.PerformanceCounter.xml",
+        "lib/net462/System.Diagnostics.PerformanceCounter.dll",
+        "lib/net462/System.Diagnostics.PerformanceCounter.xml",
+        "lib/net8.0/System.Diagnostics.PerformanceCounter.dll",
+        "lib/net8.0/System.Diagnostics.PerformanceCounter.xml",
+        "lib/net9.0/System.Diagnostics.PerformanceCounter.dll",
+        "lib/net9.0/System.Diagnostics.PerformanceCounter.xml",
+        "lib/netstandard2.0/System.Diagnostics.PerformanceCounter.dll",
+        "lib/netstandard2.0/System.Diagnostics.PerformanceCounter.xml",
+        "runtimes/win/lib/net10.0/System.Diagnostics.PerformanceCounter.dll",
+        "runtimes/win/lib/net10.0/System.Diagnostics.PerformanceCounter.xml",
+        "runtimes/win/lib/net8.0/System.Diagnostics.PerformanceCounter.dll",
+        "runtimes/win/lib/net8.0/System.Diagnostics.PerformanceCounter.xml",
+        "runtimes/win/lib/net9.0/System.Diagnostics.PerformanceCounter.dll",
+        "runtimes/win/lib/net9.0/System.Diagnostics.PerformanceCounter.xml",
+        "system.diagnostics.performancecounter.10.0.2.nupkg.sha512",
+        "system.diagnostics.performancecounter.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Security.Cryptography.ProtectedData/10.0.2": {
+      "sha512": "me7W69hkjdu5EzHXCQSXv9OS3uAkMXT26oZuWTaabeoO5BPxSVuRVJ2FSfIW8xyGxBb6mKCE6ZKg7TLk3IzJBQ==",
+      "type": "package",
+      "path": "system.security.cryptography.protecteddata/10.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Security.Cryptography.ProtectedData.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Security.Cryptography.ProtectedData.targets",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net10.0/System.Security.Cryptography.ProtectedData.dll",
+        "lib/net10.0/System.Security.Cryptography.ProtectedData.xml",
+        "lib/net462/System.Security.Cryptography.ProtectedData.dll",
+        "lib/net462/System.Security.Cryptography.ProtectedData.xml",
+        "lib/net8.0/System.Security.Cryptography.ProtectedData.dll",
+        "lib/net8.0/System.Security.Cryptography.ProtectedData.xml",
+        "lib/net9.0/System.Security.Cryptography.ProtectedData.dll",
+        "lib/net9.0/System.Security.Cryptography.ProtectedData.xml",
+        "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll",
+        "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.xml",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "system.security.cryptography.protecteddata.10.0.2.nupkg.sha512",
+        "system.security.cryptography.protecteddata.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Threading.AccessControl/10.0.2": {
+      "sha512": "oASBukOYT+HyJeekgLtZ9drK/w7JTR3BnwZgQRdx1UhCjDyRVUGsAX6CBVsKI5SglYlOMo9kdDpOG17MJ550Gw==",
+      "type": "package",
+      "path": "system.threading.accesscontrol/10.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Threading.AccessControl.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Threading.AccessControl.targets",
+        "lib/net10.0/System.Threading.AccessControl.dll",
+        "lib/net10.0/System.Threading.AccessControl.xml",
+        "lib/net462/System.Threading.AccessControl.dll",
+        "lib/net462/System.Threading.AccessControl.xml",
+        "lib/net8.0/System.Threading.AccessControl.dll",
+        "lib/net8.0/System.Threading.AccessControl.xml",
+        "lib/net9.0/System.Threading.AccessControl.dll",
+        "lib/net9.0/System.Threading.AccessControl.xml",
+        "lib/netstandard2.0/System.Threading.AccessControl.dll",
+        "lib/netstandard2.0/System.Threading.AccessControl.xml",
+        "runtimes/win/lib/net10.0/System.Threading.AccessControl.dll",
+        "runtimes/win/lib/net10.0/System.Threading.AccessControl.xml",
+        "runtimes/win/lib/net8.0/System.Threading.AccessControl.dll",
+        "runtimes/win/lib/net8.0/System.Threading.AccessControl.xml",
+        "runtimes/win/lib/net9.0/System.Threading.AccessControl.dll",
+        "runtimes/win/lib/net9.0/System.Threading.AccessControl.xml",
+        "system.threading.accesscontrol.10.0.2.nupkg.sha512",
+        "system.threading.accesscontrol.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "SystemHealthDashboard.Core/1.0.0": {
+      "type": "project",
+      "path": "../SystemHealthDashboard.Core/SystemHealthDashboard.Core.csproj",
+      "msbuildProject": "../SystemHealthDashboard.Core/SystemHealthDashboard.Core.csproj"
+    },
+    "SystemHealthDashboard.Metrics/1.0.0": {
+      "type": "project",
+      "path": "../SystemHealthDashboard.Metrics/SystemHealthDashboard.Metrics.csproj",
+      "msbuildProject": "../SystemHealthDashboard.Metrics/SystemHealthDashboard.Metrics.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0-windows7.0": []
+    "net8.0-windows7.0": [
+      "SystemHealthDashboard.Core >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\esmer\\.nuget\\packages\\": {}
@@ -31,7 +353,11 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\esmer\\Desktop\\AlesSystems\\System-Health-Dashboard\\src\\SystemHealthDashboard.Core\\SystemHealthDashboard.Core.csproj": {
+              "projectPath": "C:\\Users\\esmer\\Desktop\\AlesSystems\\System-Health-Dashboard\\src\\SystemHealthDashboard.Core\\SystemHealthDashboard.Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

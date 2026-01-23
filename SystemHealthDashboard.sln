@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemHealthDashboard.Core"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemHealthDashboard.Metrics", "src\SystemHealthDashboard.Metrics\SystemHealthDashboard.Metrics.csproj", "{0F10F9D8-A724-4803-AC9D-0397FE3FC92C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemHealthDashboard.Demo", "src\SystemHealthDashboard.Demo\SystemHealthDashboard.Demo.csproj", "{4E8389CA-4481-4212-AF00-C7C70991F896}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +34,15 @@ Global
 		{0F10F9D8-A724-4803-AC9D-0397FE3FC92C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F10F9D8-A724-4803-AC9D-0397FE3FC92C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F10F9D8-A724-4803-AC9D-0397FE3FC92C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E8389CA-4481-4212-AF00-C7C70991F896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E8389CA-4481-4212-AF00-C7C70991F896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E8389CA-4481-4212-AF00-C7C70991F896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E8389CA-4481-4212-AF00-C7C70991F896}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1180C838-EFA3-4334-AA88-45E2D28D41F0} = {7B29E193-4B48-4BD8-8DA0-0DE73D2EB361}
 		{80493435-8455-4F0F-A83E-5662B4E381D7} = {7B29E193-4B48-4BD8-8DA0-0DE73D2EB361}
 		{0F10F9D8-A724-4803-AC9D-0397FE3FC92C} = {7B29E193-4B48-4BD8-8DA0-0DE73D2EB361}
+		{4E8389CA-4481-4212-AF00-C7C70991F896} = {7B29E193-4B48-4BD8-8DA0-0DE73D2EB361}
 	EndGlobalSection
 EndGlobal
