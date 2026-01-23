@@ -20,7 +20,7 @@ public class MainViewModel : ViewModelBase, IDisposable
     private readonly NotificationService _notificationService;
     private readonly UIUpdateThrottler _uiThrottler;
     private readonly MetricUpdateBatch _pendingUpdates;
-    private readonly int _maxDataPoints = 60;
+    private int _maxDataPoints = 60;
 
     private readonly ObservableCollection<ObservableValue> _cpuValues;
     private readonly ObservableCollection<ObservableValue> _memoryValues;
@@ -43,7 +43,7 @@ public class MainViewModel : ViewModelBase, IDisposable
 
     public MainViewModel()
     {
-        _appCore = new ApplicationCore(updateIntervalMs: 1000, historySize: 60);
+        _appCore = new ApplicationCore();
         _notificationService = new NotificationService(_appCore.Alerts.Configuration);
         _uiThrottler = new UIUpdateThrottler(intervalMs: 100);
         _pendingUpdates = new MetricUpdateBatch();
@@ -54,6 +54,9 @@ public class MainViewModel : ViewModelBase, IDisposable
         _diskWriteValues = new ObservableCollection<ObservableValue>();
         _networkDownloadValues = new ObservableCollection<ObservableValue>();
         _networkUploadValues = new ObservableCollection<ObservableValue>();
+
+        var settings = _appCore.Settings.GetCurrentSettings();
+        _maxDataPoints = settings.HistorySize;
 
         InitializeCharts();
         SubscribeToEvents();
@@ -320,6 +323,16 @@ public class MainViewModel : ViewModelBase, IDisposable
     {
         get => _currentAlertSeverity;
         set => SetProperty(ref _currentAlertSeverity, value);
+    }
+
+    public ApplicationSettings GetCurrentSettings()
+    {
+        return _appCore.Settings.GetCurrentSettings();
+    }
+
+    public void UpdateSettings(ApplicationSettings settings)
+    {
+        _appCore.Settings.SaveSettings(settings);
     }
 
     public void Dispose()

@@ -50,12 +50,24 @@
         </Grid.RowDefinitions>
         
         <!-- Header -->
-        <TextBlock Grid.Row="0" 
-                   Text="⚡ System Health Dashboard" 
-                   FontSize="28" 
-                   FontWeight="Bold" 
-                   Foreground="White"
-                   Margin="0,0,0,20"/>
+        <Grid Grid.Row="0">
+            <TextBlock Text="⚡ System Health Dashboard" 
+                       FontSize="28" 
+                       FontWeight="Bold" 
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       Margin="0,0,0,20"/>
+            <Button Content="⚙️ Settings" 
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Width="120"
+                    Height="35"
+                    Background="#FF2D2D30"
+                    Foreground="White"
+                    BorderThickness="0"
+                    FontSize="14"
+                    Click="SettingsButton_Click"/>
+        </Grid>
         
         <!-- Metric Cards -->
         <Grid Grid.Row="1">

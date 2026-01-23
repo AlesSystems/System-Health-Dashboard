@@ -11,6 +11,7 @@
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Show Dashboard" Click="ShowDashboard_Click" FontWeight="Bold" />
+                    <MenuItem Header="Settings" Click="ShowSettings_Click" />
                     <Separator />
                     <MenuItem Header="Exit" Click="Exit_Click" />
                 </ContextMenu>

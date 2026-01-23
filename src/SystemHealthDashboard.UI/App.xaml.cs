@@ -29,6 +29,16 @@ public partial class App : Application
         {
             _mainViewModel = viewModel;
             _mainViewModel.AlertSeverityChanged += OnAlertSeverityChanged;
+            
+            var settings = viewModel.GetCurrentSettings();
+            if (settings.Startup.StartMinimized)
+            {
+                MainWindow.WindowState = WindowState.Minimized;
+                if (settings.Startup.MinimizeToTray)
+                {
+                    MainWindow.Hide();
+                }
+            }
         }
     }
 
@@ -56,6 +66,18 @@ public partial class App : Application
     private void ShowDashboard_Click(object sender, RoutedEventArgs e)
     {
         ShowMainWindow();
+    }
+
+    private void ShowSettings_Click(object sender, RoutedEventArgs e)
+    {
+        if (_mainViewModel != null)
+        {
+            var settingsWindow = new SettingsWindow(_mainViewModel)
+            {
+                Owner = MainWindow
+            };
+            settingsWindow.ShowDialog();
+        }
     }
 
     private void Exit_Click(object sender, RoutedEventArgs e)

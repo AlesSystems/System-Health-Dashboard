@@ -35,4 +35,11 @@ public partial class MainWindow : Window
         base.OnClosed(e);
         _viewModel?.Dispose();
     }
+
+    private void SettingsButton_Click(object sender, RoutedEventArgs e)
+    {
+        var settingsWindow = new SettingsWindow(_viewModel);
+        settingsWindow.Owner = this;
+        settingsWindow.ShowDialog();
+    }
 }

@@ -11,23 +11,40 @@ public class ApplicationCore : IDisposable
     private readonly OptimizedMetricCache _metricCache;
     private readonly EventBus _eventBus;
     private readonly AlertService _alertService;
+    private readonly SettingsService _settingsService;
     private readonly int _updateIntervalMs;
     private readonly int _historySize;
 
     public EventBus EventBus => _eventBus;
     public OptimizedMetricCache Cache => _metricCache;
     public AlertService Alerts => _alertService;
+    public SettingsService Settings => _settingsService;
     public bool IsRunning => _metricManager.IsRunning;
 
-    public ApplicationCore(int updateIntervalMs = 1000, int historySize = 60)
+    public ApplicationCore(int updateIntervalMs = 1000, int historySize = 60, SettingsService? settingsService = null)
     {
-        _updateIntervalMs = updateIntervalMs;
-        _historySize = historySize;
+        _settingsService = settingsService ?? new SettingsService();
+        
+        var settings = _settingsService.LoadSettings();
+        _updateIntervalMs = settings.RefreshIntervalMs;
+        _historySize = settings.HistorySize;
 
-        _metricManager = new MetricManager(updateIntervalMs, historySize);
-        _metricCache = new OptimizedMetricCache(historySize);
+        _metricManager = new MetricManager(_updateIntervalMs, _historySize);
+        _metricCache = new OptimizedMetricCache(_historySize);
         _eventBus = new EventBus();
-        _alertService = new AlertService();
+        
+        var alertConfig = new AlertConfiguration
+        {
+            CpuThresholdPercent = settings.Thresholds.CpuThresholdPercent,
+            CpuThresholdDurationSeconds = settings.Thresholds.CpuThresholdDurationSeconds,
+            MemoryThresholdPercent = settings.Thresholds.MemoryThresholdPercent,
+            MemoryThresholdDurationSeconds = settings.Thresholds.MemoryThresholdDurationSeconds,
+            DiskUsageThresholdPercent = settings.Thresholds.DiskUsageThresholdPercent,
+            NotificationsEnabled = settings.Thresholds.NotificationsEnabled,
+            TrayIconColorChangeEnabled = settings.Thresholds.TrayIconColorChangeEnabled
+        };
+        
+        _alertService = new AlertService(alertConfig);
 
         _metricManager.CpuMetricUpdated += OnCpuMetricUpdated;
         _metricManager.MemoryMetricUpdated += OnMemoryMetricUpdated;
