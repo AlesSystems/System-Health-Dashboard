@@ -1,9 +1,22 @@
 ﻿using SystemHealthDashboard.Core.Services;
+using SystemHealthDashboard.Core.Models;
 
-Console.WriteLine("=== System Health Dashboard - Phase 5 Demo ===");
-Console.WriteLine("Application Core Test\n");
+Console.WriteLine("=== System Health Dashboard - Phase 7 Demo ===");
+Console.WriteLine("Application Core with Alerts Test\n");
 
 using var app = new ApplicationCore(updateIntervalMs: 1000, historySize: 60);
+
+// Configure alert thresholds (lower for demo purposes)
+app.Alerts.Configuration.CpuThresholdPercent = 50.0;
+app.Alerts.Configuration.CpuThresholdDurationSeconds = 5;
+app.Alerts.Configuration.MemoryThresholdPercent = 60.0;
+app.Alerts.Configuration.MemoryThresholdDurationSeconds = 5;
+app.Alerts.Configuration.DiskUsageThresholdPercent = 90.0;
+
+Console.WriteLine($"Alert Configuration:");
+Console.WriteLine($"  CPU Threshold: {app.Alerts.Configuration.CpuThresholdPercent}% for {app.Alerts.Configuration.CpuThresholdDurationSeconds}s");
+Console.WriteLine($"  Memory Threshold: {app.Alerts.Configuration.MemoryThresholdPercent}% for {app.Alerts.Configuration.MemoryThresholdDurationSeconds}s");
+Console.WriteLine($"  Disk Threshold: {app.Alerts.Configuration.DiskUsageThresholdPercent}%\n");
 
 app.EventBus.CpuMetricReceived += (s, e) =>
 {
@@ -35,6 +48,27 @@ app.EventBus.NetworkMetricReceived += (s, e) =>
     Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Network: Down {downloadKB:F2} KB/s, Up {uploadKB:F2} KB/s");
 };
 
+app.Alerts.AlertTriggered += (s, alert) =>
+{
+    Console.ForegroundColor = alert.Severity == AlertSeverity.Critical ? ConsoleColor.Red : ConsoleColor.Yellow;
+    Console.WriteLine($"\n*** ALERT [{alert.Severity}] *** {alert.Message}");
+    Console.WriteLine($"    Value: {alert.Value:F2}, Threshold: {alert.Threshold:F2}");
+    Console.ResetColor();
+};
+
+app.Alerts.SeverityChanged += (s, severity) =>
+{
+    var color = severity switch
+    {
+        AlertSeverity.Critical => ConsoleColor.Red,
+        AlertSeverity.Warning => ConsoleColor.Yellow,
+        _ => ConsoleColor.Green
+    };
+    Console.ForegroundColor = color;
+    Console.WriteLine($"\n>>> System Severity Changed: {severity} <<<\n");
+    Console.ResetColor();
+};
+
 Console.WriteLine("Starting Application Core...\n");
 app.Start();
 
@@ -60,4 +94,6 @@ foreach (var metric in memoryHistory)
     Console.WriteLine($"  [{metric.Timestamp:HH:mm:ss}] {usedMB:F2} MB ({metric.UsagePercent:F2}%)");
 }
 
+Console.WriteLine($"\nFinal Alert Severity: {app.Alerts.CurrentSeverity}");
 Console.WriteLine("\n=== Demo Complete ===");
+

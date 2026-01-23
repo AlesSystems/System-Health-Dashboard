@@ -1,4 +1,5 @@
 using SystemHealthDashboard.Core.Events;
+using SystemHealthDashboard.Core.Models;
 using SystemHealthDashboard.Metrics;
 using SystemHealthDashboard.Metrics.Models;
 
@@ -9,11 +10,13 @@ public class ApplicationCore : IDisposable
     private readonly MetricManager _metricManager;
     private readonly MetricCache _metricCache;
     private readonly EventBus _eventBus;
+    private readonly AlertService _alertService;
     private readonly int _updateIntervalMs;
     private readonly int _historySize;
 
     public EventBus EventBus => _eventBus;
     public MetricCache Cache => _metricCache;
+    public AlertService Alerts => _alertService;
     public bool IsRunning => _metricManager.IsRunning;
 
     public ApplicationCore(int updateIntervalMs = 1000, int historySize = 60)
@@ -24,6 +27,7 @@ public class ApplicationCore : IDisposable
         _metricManager = new MetricManager(updateIntervalMs, historySize);
         _metricCache = new MetricCache(historySize);
         _eventBus = new EventBus();
+        _alertService = new AlertService();
 
         _metricManager.CpuMetricUpdated += OnCpuMetricUpdated;
         _metricManager.MemoryMetricUpdated += OnMemoryMetricUpdated;
@@ -45,18 +49,21 @@ public class ApplicationCore : IDisposable
     {
         _metricCache.UpdateCpu(metric);
         _eventBus.PublishCpuMetric(metric);
+        _alertService.CheckCpuMetric(metric);
     }
 
     private void OnMemoryMetricUpdated(object? sender, MemoryMetricData metric)
     {
         _metricCache.UpdateMemory(metric);
         _eventBus.PublishMemoryMetric(metric);
+        _alertService.CheckMemoryMetric(metric);
     }
 
     private void OnDiskMetricUpdated(object? sender, DiskMetricData metric)
     {
         _metricCache.UpdateDisk(metric);
         _eventBus.PublishDiskMetric(metric);
+        _alertService.CheckDiskMetric(metric);
     }
 
     private void OnNetworkMetricUpdated(object? sender, NetworkMetricData metric)

@@ -6,12 +6,15 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using SystemHealthDashboard.Core.Services;
+using SystemHealthDashboard.Core.Models;
+using SystemHealthDashboard.UI.Services;
 
 namespace SystemHealthDashboard.UI.ViewModels;
 
 public class MainViewModel : ViewModelBase, IDisposable
 {
     private readonly ApplicationCore _appCore;
+    private readonly NotificationService _notificationService;
     private readonly int _maxDataPoints = 60;
 
     private readonly ObservableCollection<ObservableValue> _cpuValues;
@@ -29,10 +32,14 @@ public class MainViewModel : ViewModelBase, IDisposable
     private double _currentDiskWrite;
     private double _currentNetworkDownload;
     private double _currentNetworkUpload;
+    private AlertSeverity _currentAlertSeverity;
+
+    public event EventHandler<AlertSeverity>? AlertSeverityChanged;
 
     public MainViewModel()
     {
         _appCore = new ApplicationCore(updateIntervalMs: 1000, historySize: 60);
+        _notificationService = new NotificationService(_appCore.Alerts.Configuration);
 
         _cpuValues = new ObservableCollection<ObservableValue>();
         _memoryValues = new ObservableCollection<ObservableValue>();
@@ -156,6 +163,20 @@ public class MainViewModel : ViewModelBase, IDisposable
                 AddDataPoint(_networkUploadValues, CurrentNetworkUpload);
             });
         };
+
+        _appCore.Alerts.AlertTriggered += (s, alert) =>
+        {
+            _notificationService.ShowAlert(alert);
+        };
+
+        _appCore.Alerts.SeverityChanged += (s, severity) =>
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                CurrentAlertSeverity = severity;
+                AlertSeverityChanged?.Invoke(this, severity);
+            });
+        };
     }
 
     private void AddDataPoint(ObservableCollection<ObservableValue> collection, double value)
@@ -218,6 +239,12 @@ public class MainViewModel : ViewModelBase, IDisposable
     {
         get => _currentNetworkUpload;
         set => SetProperty(ref _currentNetworkUpload, value);
+    }
+
+    public AlertSeverity CurrentAlertSeverity
+    {
+        get => _currentAlertSeverity;
+        set => SetProperty(ref _currentAlertSeverity, value);
     }
 
     public void Dispose()
