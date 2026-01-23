@@ -1,0 +1,86 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# Build outputs
+dist/
+dist-electron/
+build/
+out/
+release/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+Thumbs.db
+Desktop.ini
+.AppleDouble
+.LSOverride
+._*
+
+# Testing
+coverage/
+*.lcov
+.nyc_output/
+test-results/
+playwright-report/
+
+# Logs
+logs/
+lerna-debug.log*
+
+# Electron specific
+*.exe
+*.dmg
+*.app
+*.AppImage
+*.deb
+*.rpm
+*.snap
+*.pkg
+*.zip
+*.tar.gz
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+.cache/
+
+# Package manager lock files (optional - uncomment if needed)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Application data (user-specific)
+.system-health-dashboard/
+user-data/
+
+# TypeScript
+.eslintcache
+
+# Misc
+.sass-cache/
+.parcel-cache/
+.webpack/
+.vite-cache/
