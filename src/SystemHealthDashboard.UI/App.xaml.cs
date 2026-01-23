@@ -17,6 +17,31 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        // Show splash screen
+        var splash = new SplashWindow();
+        splash.Show();
+
+        // Initialize application (simulate initialization time)
+        Task.Run(async () =>
+        {
+            await Task.Delay(1000);
+            splash.UpdateStatus("Loading metrics...");
+            await Task.Delay(500);
+            splash.UpdateStatus("Initializing dashboard...");
+            await Task.Delay(500);
+            splash.UpdateStatus("Ready!");
+            await Task.Delay(300);
+
+            Dispatcher.Invoke(() =>
+            {
+                splash.Close();
+                InitializeMainWindow();
+            });
+        });
+    }
+
+    private void InitializeMainWindow()
+    {
         _trayIcon = (TaskbarIcon)FindResource("TrayIcon");
         
         if (_trayIcon != null)
@@ -78,6 +103,15 @@ public partial class App : Application
             };
             settingsWindow.ShowDialog();
         }
+    }
+
+    private void ShowAbout_Click(object sender, RoutedEventArgs e)
+    {
+        var aboutWindow = new AboutWindow
+        {
+            Owner = MainWindow
+        };
+        aboutWindow.ShowDialog();
     }
 
     private void Exit_Click(object sender, RoutedEventArgs e)

@@ -1,0 +1,83 @@
+<Window x:Class="SystemHealthDashboard.UI.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About System Health Dashboard" 
+        Height="350" Width="450"
+        Background="#FF1E1E1E"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Logo/Title -->
+        <TextBlock Grid.Row="0" 
+                   Text="⚡"
+                   FontSize="72"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+        
+        <TextBlock Grid.Row="1"
+                   Text="System Health Dashboard"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,10"/>
+        
+        <!-- Version Info -->
+        <TextBlock Grid.Row="2"
+                   x:Name="VersionText"
+                   FontSize="14"
+                   Foreground="#FFB0B0B0"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+        
+        <!-- Description -->
+        <TextBlock Grid.Row="3"
+                   Text="Real-time system health monitoring dashboard"
+                   FontSize="12"
+                   Foreground="#FFB0B0B0"
+                   HorizontalAlignment="Center"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   Margin="0,0,0,20"/>
+        
+        <!-- Additional Info -->
+        <StackPanel Grid.Row="4" 
+                    VerticalAlignment="Center">
+            <TextBlock Text="© 2026 AlesSystems"
+                       FontSize="12"
+                       Foreground="#FF888888"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,5"/>
+            
+            <TextBlock FontSize="11"
+                       Foreground="#FF666666"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       Margin="0,10,0,0">
+                <Run Text="Built with .NET 8 and WPF"/>
+            </TextBlock>
+        </StackPanel>
+        
+        <!-- Close Button -->
+        <Button Grid.Row="5"
+                Content="Close"
+                Width="100"
+                Height="35"
+                Background="#FF2D2D30"
+                Foreground="White"
+                BorderThickness="0"
+                FontSize="14"
+                HorizontalAlignment="Center"
+                Click="CloseButton_Click"/>
+    </Grid>
+</Window>

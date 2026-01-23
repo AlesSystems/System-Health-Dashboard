@@ -335,6 +335,46 @@ public class MainViewModel : ViewModelBase, IDisposable
         _appCore.Settings.SaveSettings(settings);
     }
 
+    public CpuMetricData? GetCurrentCpuMetric()
+    {
+        return _appCore.GetCurrentCpuMetric();
+    }
+
+    public MemoryMetricData? GetCurrentMemoryMetric()
+    {
+        return _appCore.GetCurrentMemoryMetric();
+    }
+
+    public DiskMetricData? GetCurrentDiskMetric()
+    {
+        return _appCore.GetCurrentDiskMetric();
+    }
+
+    public NetworkMetricData? GetCurrentNetworkMetric()
+    {
+        return _appCore.GetCurrentNetworkMetric();
+    }
+
+    public IReadOnlyList<CpuMetricData>? GetCpuHistory()
+    {
+        return _appCore.GetCpuHistory();
+    }
+
+    public IReadOnlyList<MemoryMetricData>? GetMemoryHistory()
+    {
+        return _appCore.GetMemoryHistory();
+    }
+
+    public IReadOnlyList<DiskMetricData>? GetDiskHistory()
+    {
+        return _appCore.GetDiskHistory();
+    }
+
+    public IReadOnlyList<NetworkMetricData>? GetNetworkHistory()
+    {
+        return _appCore.GetNetworkHistory();
+    }
+
     public void Dispose()
     {
         _uiThrottler?.Dispose();

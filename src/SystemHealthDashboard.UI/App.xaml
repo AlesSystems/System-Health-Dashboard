@@ -12,6 +12,7 @@
                 <ContextMenu>
                     <MenuItem Header="Show Dashboard" Click="ShowDashboard_Click" FontWeight="Bold" />
                     <MenuItem Header="Settings" Click="ShowSettings_Click" />
+                    <MenuItem Header="About" Click="ShowAbout_Click" />
                     <Separator />
                     <MenuItem Header="Exit" Click="Exit_Click" />
                 </ContextMenu>
