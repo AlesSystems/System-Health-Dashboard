@@ -4,9 +4,203 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SystemHealthDashboard.UI"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:vm="clr-namespace:SystemHealthDashboard.UI.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="System Health Dashboard" Height="700" Width="1200"
+        Background="#FF1E1E1E"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    
+    <Window.Resources>
+        <Style TargetType="Border" x:Key="CardStyle">
+            <Setter Property="Background" Value="#FF2D2D30"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        
+        <Style TargetType="TextBlock" x:Key="TitleStyle">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+        
+        <Style TargetType="TextBlock" x:Key="ValueStyle">
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style TargetType="TextBlock" x:Key="LabelStyle">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#FFB0B0B0"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <TextBlock Grid.Row="0" 
+                   Text="⚡ System Health Dashboard" 
+                   FontSize="28" 
+                   FontWeight="Bold" 
+                   Foreground="White"
+                   Margin="0,0,0,20"/>
+        
+        <!-- Metric Cards -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- CPU Card -->
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="🔥 CPU" Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="{Binding CurrentCpu, StringFormat={}{0:F1}%}" 
+                               Style="{StaticResource ValueStyle}"
+                               Foreground="#FF6495ED"/>
+                    <ProgressBar Height="8" 
+                                 Value="{Binding CurrentCpu}" 
+                                 Maximum="100"
+                                 Foreground="#FF6495ED"
+                                 Background="#FF3E3E42"
+                                 BorderThickness="0"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Memory Card -->
+            <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="💾 Memory" Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="{Binding CurrentMemory, StringFormat={}{0:F1}%}" 
+                               Style="{StaticResource ValueStyle}"
+                               Foreground="#FF3CB371"/>
+                    <TextBlock Style="{StaticResource LabelStyle}">
+                        <Run Text="{Binding CurrentMemoryUsedMB, StringFormat={}{0:N0}}"/>
+                        <Run Text="/"/>
+                        <Run Text="{Binding CurrentMemoryTotalMB, StringFormat={}{0:N0}}"/>
+                        <Run Text="MB"/>
+                    </TextBlock>
+                    <ProgressBar Height="8" 
+                                 Value="{Binding CurrentMemory}" 
+                                 Maximum="100"
+                                 Foreground="#FF3CB371"
+                                 Background="#FF3E3E42"
+                                 BorderThickness="0"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Disk Card -->
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="💿 Disk I/O" Style="{StaticResource TitleStyle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="↓" Foreground="#FFFFA500" FontSize="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding CurrentDiskRead, StringFormat={}{0:F1}}" 
+                                   FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text=" KB/s" FontSize="12" Foreground="#FFB0B0B0" VerticalAlignment="Bottom" Margin="0,0,15,2"/>
+                        <TextBlock Text="↑" Foreground="#FFFF4500" FontSize="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding CurrentDiskWrite, StringFormat={}{0:F1}}" 
+                                   FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text=" KB/s" FontSize="12" Foreground="#FFB0B0B0" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            
+            <!-- Network Card -->
+            <Border Grid.Column="3" Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="🌐 Network" Style="{StaticResource TitleStyle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="↓" Foreground="#FF9370DB" FontSize="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding CurrentNetworkDownload, StringFormat={}{0:F1}}" 
+                                   FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text=" KB/s" FontSize="12" Foreground="#FFB0B0B0" VerticalAlignment="Bottom" Margin="0,0,15,2"/>
+                        <TextBlock Text="↑" Foreground="#FFFF1493" FontSize="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding CurrentNetworkUpload, StringFormat={}{0:F1}}" 
+                                   FontSize="20" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text=" KB/s" FontSize="12" Foreground="#FFB0B0B0" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+        
+        <!-- Charts -->
+        <Grid Grid.Row="2" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- CPU Chart -->
+            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="CPU Usage History" Style="{StaticResource TitleStyle}"/>
+                    <lvc:CartesianChart Grid.Row="1" Series="{Binding CpuSeries}" 
+                                        Background="Transparent"/>
+                </Grid>
+            </Border>
+            
+            <!-- Memory Chart -->
+            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Memory Usage History" Style="{StaticResource TitleStyle}"/>
+                    <lvc:CartesianChart Grid.Row="1" Series="{Binding MemorySeries}"
+                                        Background="Transparent"/>
+                </Grid>
+            </Border>
+            
+            <!-- Disk Chart -->
+            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Disk I/O History" Style="{StaticResource TitleStyle}"/>
+                    <lvc:CartesianChart Grid.Row="1" Series="{Binding DiskSeries}"
+                                        Background="Transparent"/>
+                </Grid>
+            </Border>
+            
+            <!-- Network Chart -->
+            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Network Traffic History" Style="{StaticResource TitleStyle}"/>
+                    <lvc:CartesianChart Grid.Row="1" Series="{Binding NetworkSeries}"
+                                        Background="Transparent"/>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
